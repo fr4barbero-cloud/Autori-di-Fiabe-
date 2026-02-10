@@ -29,6 +29,7 @@
     font-family:"Atkinson Hyperlegible", Arial, sans-serif;
   }
 
+  /* PC: come prima, nessuna modifica visiva */
   body{ overflow:hidden; }
 
   header{
@@ -66,13 +67,6 @@
     gap: var(--gap);
   }
 
-  @media (max-width: 980px){
-    .grid{
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-    }
-  }
-
   .card{ perspective: 1200px; }
 
   .card > button{
@@ -82,6 +76,8 @@
     display:block;
     cursor:pointer;
     border-radius: var(--radius);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   .card-inner{
@@ -153,8 +149,6 @@
     text-transform:uppercase;
     letter-spacing:.6px;
   }
-
-  /* TESTO PIÙ GRANDE */
   .back p{
     margin:0;
     text-align:justify;
@@ -164,7 +158,6 @@
     padding-right: 4px;
   }
 
-  /* Se un'immagine manca, mostra un messaggio chiaro */
   .missing{
     display:flex;
     align-items:center;
@@ -177,6 +170,61 @@
 
   .card > button:focus-visible .card-inner{
     box-shadow: 0 0 0 4px rgba(0,0,0,.22), var(--shadow);
+  }
+
+  /* ========= SMARTPHONE =========
+     Obiettivo: leggibilità e usabilità.
+     Non modifica la versione PC (attiva solo sotto 680px).
+  */
+  @media (max-width: 680px){
+    body{
+      overflow:auto; /* su smartphone permette lo scorrimento della pagina */
+    }
+
+    header{
+      height:auto;
+      padding: 12px 12px 10px;
+    }
+
+    main{
+      height:auto;
+      padding: 12px;
+    }
+
+    /* 1 colonna: card grandi e leggibili */
+    .grid{
+      height:auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 14px;
+    }
+
+    /* altezza card adatta allo schermo */
+    .card{
+      height: min(78vh, 680px);
+    }
+
+    /* testo più grande su telefono */
+    .name{
+      font-size: 18px;
+      padding: 10px 12px;
+    }
+
+    .back{
+      padding: 14px;
+      gap: 10px;
+    }
+
+    .back h2{
+      font-size: 18px;
+    }
+
+    .back p{
+      font-size: 18px;
+      line-height: 1.5;
+      /* scorrimento interno più semplice su mobile */
+      -webkit-overflow-scrolling: touch;
+    }
   }
 </style>
 </head>
@@ -192,13 +240,12 @@
 </main>
 
 <script>
-  // Ordine cronologico
   const cards = [
     {
       name: "LE MILLE E UNA NOTTE",
       img: "mille.png",
       title: "Le Mille e una notte",
-      text: "Sono Shahrazād: ogni notte racconto una storia per salvarmi, fermandomi sul momento più avvincente. Forse conoscete Aladino, Ali Babà e i quaranta ladroni. I protagonisti cambiano il destino con intelligenza e coraggio. Le mie storie possono salvare."
+      text: "Sono Shahrazād: ogni notte racconto per salvarmi, fermandomi sul più avvincente. Qui trovate Aladino, Ali Babà e Sinbad. I protagonisti cambiano destino con intelligenza e coraggio. Le storie possono salvare."
     },
     {
       name: "PERRAULT",
@@ -210,19 +257,19 @@
       name: "FRATELLI GRIMM",
       img: "grimm.png",
       title: "Fratelli Grimm",
-      text: "Siamo i fratelli Grimm e nell’Ottocento abbiamo raccolto le fiabe del nostro popolo: ascoltate a voce, poi scritte. Parlano di emozioni profonde e aiutano a crescere. Tra le storie più note ci sono Biancaneve, Hansel e Gretel, La bella addormentata nel bosco."
+      text: "Nell’Ottocento abbiamo raccolto le fiabe del nostro popolo: ascoltate a voce, poi scritte. Parlano di emozioni profonde e aiutano a crescere. Tra le più note: Biancaneve, Hansel e Gretel, La bella addormentata nel bosco."
     },
     {
       name: "ANDERSEN",
       img: "andersen.png",
       title: "Hans Christian Andersen",
-      text: "Ho reso la fiaba intima e profonda: nasce spesso da emozioni personali. Parlo di solitudine, speranza e desiderio di essere accettati. Nelle mie storie come La Sirenetta e Il Brutto Anatroccolo la fragilità diventa forza."
+      text: "Ho reso la fiaba intima e profonda: nasce spesso da emozioni personali. Parlo di solitudine, speranza e desiderio di essere accettati. In La sirenetta e Il brutto anatroccolo i protagonisti soffrono, cambiano e crescono: la fragilità può diventare forza."
     },
     {
       name: "AFANASIEV",
       img: "afanasiev.png",
       title: "Aleksandr Afanasiev",
-      text: "Ho raccolto le fiabe russe per conservarne l’anima. Nei racconti vivono Baba Jaga e l’Uccello di Fuoco, tra boschi immensi e inverni freddi. I protagonisti vincono con astuzia e coraggio: la fantasia aiuta ad affrontare la vita."
+      text: "Ho raccolto le fiabe russe per conservarne l’anima. Nei racconti vivono Baba Jaga e l’Uccello di Fuoco, tra boschi immensi e prove difficili. I protagonisti vincono con astuzia e coraggio: la fantasia aiuta ad affrontare la vita."
     },
     {
       name: "MUNARI",
@@ -234,7 +281,7 @@
       name: "RODARI",
       img: "rodari.png",
       title: "Gianni Rodari",
-      text: "Per me la fiaba è un gioco serio che allena il cervello. Le storie possono capovolgersi e sorprendere. Unendo parole lontane, come cane e armadio, nasce un racconto: ogni bambino può inventare e diventare autore."
+      text: "Per me la fiaba è un gioco serio che allena il pensiero. Le storie possono capovolgersi e sorprendere. Unendo parole lontane, come cane e armadio, nasce un racconto: ogni bambino può inventare e diventare autore."
     },
     {
       name: "CALVINO",
@@ -276,14 +323,15 @@
       </button>
     `;
 
-    // Se un'immagine non si carica, mostra un messaggio
     const img = el.querySelector("img");
     img.addEventListener("error", () => {
       const wrap = el.querySelector(".img-wrap");
       wrap.innerHTML = `<div class="missing">Immagine non trovata.<br>Controlla il nome del file.</div><div class="name">${escapeHtml(c.name)}</div>`;
     });
 
+    // click/tap
     el.querySelector("button").addEventListener("click", () => el.classList.toggle("flipped"));
+
     grid.appendChild(el);
   });
 </script>
