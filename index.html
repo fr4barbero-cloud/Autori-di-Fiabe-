@@ -29,7 +29,7 @@
     font-family:"Atkinson Hyperlegible", Arial, sans-serif;
   }
 
-  /* PC: come prima, nessuna modifica visiva */
+  /* PC: come prima */
   body{ overflow:hidden; }
 
   header{
@@ -143,12 +143,15 @@
     flex-direction:column;
     gap: 8px;
   }
+
   .back h2{
     margin:0;
     font-size: clamp(14px, 1.4vw, 18px);
     text-transform:uppercase;
     letter-spacing:.6px;
   }
+
+  /* Testo più grande e leggibile */
   .back p{
     margin:0;
     text-align:justify;
@@ -156,6 +159,11 @@
     font-size: clamp(15px, 1.35vw, 19px);
     overflow:auto;
     padding-right: 4px;
+  }
+
+  /* grassetto titoli fiabe visibile */
+  .back p strong{
+    font-weight:700;
   }
 
   .missing{
@@ -172,14 +180,9 @@
     box-shadow: 0 0 0 4px rgba(0,0,0,.22), var(--shadow);
   }
 
-  /* ========= SMARTPHONE =========
-     Obiettivo: leggibilità e usabilità.
-     Non modifica la versione PC (attiva solo sotto 680px).
-  */
+  /* SMARTPHONE: leggibile e usabile, senza modificare PC */
   @media (max-width: 680px){
-    body{
-      overflow:auto; /* su smartphone permette lo scorrimento della pagina */
-    }
+    body{ overflow:auto; }
 
     header{
       height:auto;
@@ -191,7 +194,6 @@
       padding: 12px;
     }
 
-    /* 1 colonna: card grandi e leggibili */
     .grid{
       height:auto;
       grid-template-columns: 1fr;
@@ -199,12 +201,10 @@
       gap: 14px;
     }
 
-    /* altezza card adatta allo schermo */
     .card{
       height: min(78vh, 680px);
     }
 
-    /* testo più grande su telefono */
     .name{
       font-size: 18px;
       padding: 10px 12px;
@@ -222,7 +222,6 @@
     .back p{
       font-size: 18px;
       line-height: 1.5;
-      /* scorrimento interno più semplice su mobile */
       -webkit-overflow-scrolling: touch;
     }
   }
@@ -240,60 +239,76 @@
 </main>
 
 <script>
+  // Ordine cronologico + testi aggiornati con titoli fiabe in grassetto
   const cards = [
     {
       name: "LE MILLE E UNA NOTTE",
       img: "mille.png",
       title: "Le Mille e una notte",
-      text: "Sono Shahrazād: ogni notte racconto per salvarmi, fermandomi sul più avvincente. Qui trovate Aladino, Ali Babà e Sinbad. I protagonisti cambiano destino con intelligenza e coraggio. Le storie possono salvare."
+      text: `Sono Shahrazād. Vivo tra l’800 e il 1300 nelle terre dell’Oriente e sono la narratrice de <strong>Le mille e una notte</strong>. Ogni sera racconto una storia al sultano e mi fermo sul momento più emozionante per salvare la mia vita.
+      Tra le storie più famose: <strong>Aladino e la lampada meravigliosa</strong>, <strong>Ali Babà e i quaranta ladroni</strong>, <strong>Sinbad il marinaio</strong>.
+      Le mie fiabe sono ambientate in luoghi lontani e pieni di magia. I protagonisti vincono grazie all’intelligenza e al coraggio.`
     },
     {
       name: "PERRAULT",
       img: "perrault.png",
       title: "Charles Perrault",
-      text: "Nel Seicento ho dato forma scritta alle fiabe tradizionali. Racconto magia e insegnamenti: in Cenerentola la bontà è premiata, in Cappuccetto Rosso avverto dei pericoli. Tra fate e incantesimi mostro virtù e difetti umani."
+      text: `Sono Charles Perrault, scrittore francese del 1600. Ho raccolto e scritto fiabe della tradizione popolare per conservarle nel tempo.
+      Tra le mie opere più famose: <strong>Cenerentola</strong>, <strong>Cappuccetto Rosso</strong>, <strong>La Bella Addormentata</strong>, <strong>Il Gatto con gli stivali</strong>.
+      Nelle mie storie unisco magia e insegnamenti. Alla fine inserisco spesso una morale.`
     },
     {
       name: "FRATELLI GRIMM",
       img: "grimm.png",
       title: "Fratelli Grimm",
-      text: "Nell’Ottocento abbiamo raccolto le fiabe del nostro popolo: ascoltate a voce, poi scritte. Parlano di emozioni profonde e aiutano a crescere. Tra le più note: Biancaneve, Hansel e Gretel, La bella addormentata nel bosco."
+      text: `Siamo Jacob e Wilhelm Grimm, studiosi tedeschi del 1800. Abbiamo raccolto fiabe tramandate a voce dal popolo.
+      Tra le più celebri: <strong>Biancaneve</strong>, <strong>Hansel e Gretel</strong>, <strong>Raperonzolo</strong>, <strong>Cenerentola</strong>.
+      Le nostre fiabe parlano di magia ma anche di prove difficili. I protagonisti devono affrontare paure e pericoli per crescere.`
     },
     {
       name: "ANDERSEN",
       img: "andersen.png",
       title: "Hans Christian Andersen",
-      text: "Ho reso la fiaba intima e profonda: nasce spesso da emozioni personali. Parlo di solitudine, speranza e desiderio di essere accettati. In La sirenetta e Il brutto anatroccolo i protagonisti soffrono, cambiano e crescono: la fragilità può diventare forza."
+      text: `Sono Hans Christian Andersen, scrittore danese del 1800. Non mi sono limitato a raccogliere fiabe popolari: ne ho scritte di nuove.
+      Tra le mie opere più conosciute: <strong>La Sirenetta</strong>, <strong>Il brutto anatroccolo</strong>, <strong>La piccola fiammiferaia</strong>, <strong>I vestiti nuovi dell’imperatore</strong>.
+      Le mie fiabe parlano di emozioni profonde e del desiderio di essere accettati.`
     },
     {
       name: "AFANASIEV",
       img: "afanasiev.png",
       title: "Aleksandr Afanasiev",
-      text: "Ho raccolto le fiabe russe per conservarne l’anima. Nei racconti vivono Baba Jaga e l’Uccello di Fuoco, tra boschi immensi e prove difficili. I protagonisti vincono con astuzia e coraggio: la fantasia aiuta ad affrontare la vita."
+      text: `Sono Aleksandr Afanasiev, studioso russo del 1800, e ho raccolto molte fiabe della tradizione popolare russa.
+      Tra le più famose: <strong>L’uccello di fuoco</strong>, <strong>Vassilissa la bella</strong> e le storie di <strong>Baba Jaga</strong>.
+      Nelle fiabe che ho raccolto compaiono creature magiche, foreste misteriose e prove difficili.`
     },
     {
       name: "MUNARI",
       img: "munari.png",
       title: "Bruno Munari",
-      text: "Nel Novecento ho cambiato il modo di raccontare ai bambini: il libro non è solo da leggere, ma da toccare ed esplorare. Con immagini, materiali e forme semplici invito a osservare e immaginare. Fantasia significa scoprire nuove possibilità."
+      text: `Sono Bruno Munari, artista e autore italiano del 1900. Ho creato libri originali per bambini, unendo immagini, colori e materiali diversi.
+      Tra le mie opere più conosciute: <strong>Cappuccetto Verde</strong>, <strong>Cappuccetto Giallo</strong>, <strong>Nella notte buia</strong>.
+      Le mie fiabe invitano a osservare e immaginare in modo creativo.`
     },
     {
       name: "RODARI",
       img: "rodari.png",
       title: "Gianni Rodari",
-      text: "Per me la fiaba è un gioco serio che allena il pensiero. Le storie possono capovolgersi e sorprendere. Unendo parole lontane, come cane e armadio, nasce un racconto: ogni bambino può inventare e diventare autore."
+      text: `Sono Gianni Rodari, scrittore italiano del 1900. Ho scritto storie per ragazzi usando fantasia e creatività.
+      Tra le mie opere più note: <strong>Favole al telefono</strong>, <strong>Il libro degli errori</strong>, <strong>La grammatica della fantasia</strong>.
+      Nelle mie storie gioco con le parole e con le idee per stimolare l’immaginazione.`
     },
     {
       name: "CALVINO",
       img: "calvino.png",
       title: "Italo Calvino",
-      text: "Ho raccolto e riscritto le Fiabe italiane cercando storie in tutte le regioni. Ho mantenuto magia, prove e ironia. Le fiabe mostrano la ricchezza della cultura italiana."
+      text: `Sono Italo Calvino, scrittore italiano del 1900. Ho raccolto e riscritto le <strong>Fiabe italiane</strong>, valorizzando le storie popolari delle diverse regioni d’Italia.
+      Nel mio lavoro mantengo la struttura della fiaba tradizionale ma uso un linguaggio chiaro e moderno.`
     }
   ];
 
   const grid = document.getElementById("grid");
 
-  function escapeHtml(str){
+  function escapeAttr(str){
     return String(str)
       .replaceAll("&","&amp;")
       .replaceAll("<","&lt;")
@@ -302,22 +317,42 @@
       .replaceAll("'","&#039;");
   }
 
+  // Permette <strong> nel testo ma evita altri tag
+  function sanitizeAllowStrong(html){
+    const tmp = document.createElement("div");
+    tmp.innerHTML = String(html);
+
+    const allowed = new Set(["STRONG"]);
+    const walk = (node) => {
+      [...node.children].forEach(ch => {
+        if(!allowed.has(ch.tagName)){
+          const text = document.createTextNode(ch.textContent);
+          ch.replaceWith(text);
+        }else{
+          walk(ch);
+        }
+      });
+    };
+    walk(tmp);
+    return tmp.innerHTML;
+  }
+
   cards.forEach(c => {
     const el = document.createElement("article");
     el.className = "card";
 
     el.innerHTML = `
-      <button type="button" aria-label="Capovolgi card: ${escapeHtml(c.name)}">
+      <button type="button" aria-label="Capovolgi card: ${escapeAttr(c.name)}">
         <div class="card-inner">
           <div class="side front">
             <div class="img-wrap">
-              <img src="${escapeHtml(c.img)}" alt="Immagine: ${escapeHtml(c.name)}">
-              <div class="name">${escapeHtml(c.name)}</div>
+              <img src="${escapeAttr(c.img)}" alt="Immagine: ${escapeAttr(c.name)}">
+              <div class="name">${escapeAttr(c.name)}</div>
             </div>
           </div>
           <div class="side back">
-            <h2>${escapeHtml(c.title)}</h2>
-            <p>${escapeHtml(c.text)}</p>
+            <h2>${escapeAttr(c.title)}</h2>
+            <p>${sanitizeAllowStrong(c.text)}</p>
           </div>
         </div>
       </button>
@@ -326,10 +361,11 @@
     const img = el.querySelector("img");
     img.addEventListener("error", () => {
       const wrap = el.querySelector(".img-wrap");
-      wrap.innerHTML = `<div class="missing">Immagine non trovata.<br>Controlla il nome del file.</div><div class="name">${escapeHtml(c.name)}</div>`;
+      wrap.innerHTML =
+        `<div class="missing">Immagine non trovata.<br>Controlla il nome del file.</div>
+         <div class="name">${escapeAttr(c.name)}</div>`;
     });
 
-    // click/tap
     el.querySelector("button").addEventListener("click", () => el.classList.toggle("flipped"));
 
     grid.appendChild(el);
