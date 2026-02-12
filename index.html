@@ -10,366 +10,269 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --gap: 12px;
-    --radius: 18px;
-    --border: 1px solid rgba(0,0,0,.14);
-    --shadow: 0 10px 22px rgba(0,0,0,.12);
-    --header-h: 76px;
-    --pad: 12px;
-  }
+:root{
+  --gap:12px;
+  --radius:18px;
+  --border:1px solid rgba(0,0,0,.14);
+  --shadow:0 10px 22px rgba(0,0,0,.12);
+  --pad:6px; /* ridotto per far stare meglio le card su PC */
+}
 
-  *{ box-sizing:border-box; }
+*{ box-sizing:border-box; }
 
-  html, body{
-    margin:0;
-    height:100%;
-    background:#fff;
-    color:#111;
-    font-family:"Atkinson Hyperlegible", Arial, sans-serif;
-  }
+html,body{
+  margin:0;
+  height:100%;
+  background:#fff;
+  font-family:"Atkinson Hyperlegible", Arial, sans-serif;
+}
 
-  /* PC: come prima */
-  body{ overflow:hidden; }
+/* PC */
+body{ overflow:hidden; }
 
-  header{
-    height: var(--header-h);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    text-align:center;
-    padding: 10px 12px;
-    gap: 4px;
-  }
+main{
+  height:100vh;
+  padding:var(--pad);
+  display:flex;
+  flex-direction:column;
+}
 
-  header h1{
-    margin:0;
-    font-size: 18px;
-    line-height:1.15;
-  }
+/* Titoli più piccoli per lasciare spazio alle card */
+header{
+  text-align:center;
+  margin-bottom:4px;
+}
 
-  header p{
-    margin:0;
-    font-size: 13px;
-    line-height:1.2;
-  }
+header h1{
+  margin:4px 0 0 0;
+  font-size:20px;
+  font-weight:700;
+}
+
+header h2{
+  margin:2px 0 6px 0;
+  font-weight:400;
+  font-size:14px;
+}
+
+.grid{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:var(--gap);
+}
+
+.card{ perspective:1200px; }
+
+.card button{
+  all:unset;
+  width:100%;
+  height:100%;
+  display:block;
+  cursor:pointer;
+  border-radius:var(--radius);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+.card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:var(--radius);
+  transform-style:preserve-3d;
+  transition:transform .6s ease;
+  box-shadow:var(--shadow);
+}
+
+.card.flipped .card-inner{
+  transform:rotateY(180deg);
+}
+
+.side{
+  position:absolute;
+  inset:0;
+  border-radius:var(--radius);
+  overflow:hidden;
+  backface-visibility:hidden;
+  border:var(--border);
+  background:#fff;
+}
+
+/* FRONTE */
+.front{
+  display:flex;
+  flex-direction:column;
+}
+
+.front h3{
+  margin:0;
+  padding:8px 10px;
+  text-align:center;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:1px;
+}
+
+.front img{
+  width:100%;
+  flex:1;
+  object-fit:cover;
+  display:block;
+}
+
+/* RETRO */
+.back{
+  transform:rotateY(180deg);
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+}
+
+.back p{
+  margin:0;
+  text-align:justify;
+  line-height:1.5;
+  font-size:clamp(15px,1.25vw,18px);
+  overflow:auto;
+}
+
+.back strong{
+  font-weight:700;
+}
+
+/* SMARTPHONE */
+@media (max-width:680px){
+  body{ overflow:auto; }
 
   main{
-    height: calc(100vh - var(--header-h));
-    padding: var(--pad);
+    height:auto;
+    padding:10px;
   }
+
+  header h1{ font-size:22px; }
+  header h2{ font-size:16px; }
 
   .grid{
-    height:100%;
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: var(--gap);
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+    height:auto;
+    gap:16px;
   }
 
-  .card{ perspective: 1200px; }
-
-  .card > button{
-    all:unset;
-    width:100%;
-    height:100%;
-    display:block;
-    cursor:pointer;
-    border-radius: var(--radius);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+  .card{
+    height:min(80vh,700px);
   }
 
-  .card-inner{
-    position:relative;
-    width:100%;
-    height:100%;
-    border-radius: var(--radius);
-    transform-style: preserve-3d;
-    transition: transform .6s ease;
-    box-shadow: var(--shadow);
+  .front h3{
+    font-size:16px;
   }
 
-  .card.flipped .card-inner{ transform: rotateY(180deg); }
-
-  .side{
-    position:absolute;
-    inset:0;
-    border-radius: var(--radius);
-    overflow:hidden;
-    backface-visibility:hidden;
-    border: var(--border);
-    background:#fff;
-  }
-
-  /* FRONTE */
-  .front .img-wrap{
-    position:relative;
-    width:100%;
-    height:100%;
-    background:#f2f2f2;
-  }
-  .front img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-
-  /* Nome in alto */
-  .name{
-    position:absolute;
-    top:10px;
-    left:50%;
-    transform: translateX(-50%);
-    width:92%;
-    text-align:center;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    color:#fff;
-    background: rgba(0,0,0,.60);
-    padding: 8px 10px;
-    border-radius: 14px;
-    font-size: clamp(13px, 1.5vw, 20px);
-    line-height: 1.15;
-  }
-
-  /* RETRO */
-  .back{
-    transform: rotateY(180deg);
-    padding: 12px;
-    display:flex;
-    flex-direction:column;
-    gap: 8px;
-  }
-
-  .back h2{
-    margin:0;
-    font-size: clamp(14px, 1.4vw, 18px);
-    text-transform:uppercase;
-    letter-spacing:.6px;
-  }
-
-  /* Testo più grande e leggibile */
   .back p{
-    margin:0;
-    text-align:justify;
-    line-height:1.45;
-    font-size: clamp(15px, 1.35vw, 19px);
-    overflow:auto;
-    padding-right: 4px;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-overflow-scrolling:touch;
   }
-
-  /* grassetto titoli fiabe visibile */
-  .back p strong{
-    font-weight:700;
-  }
-
-  .missing{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:100%;
-    padding:12px;
-    text-align:center;
-    font-weight:700;
-  }
-
-  .card > button:focus-visible .card-inner{
-    box-shadow: 0 0 0 4px rgba(0,0,0,.22), var(--shadow);
-  }
-
-  /* SMARTPHONE: leggibile e usabile, senza modificare PC */
-  @media (max-width: 680px){
-    body{ overflow:auto; }
-
-    header{
-      height:auto;
-      padding: 12px 12px 10px;
-    }
-
-    main{
-      height:auto;
-      padding: 12px;
-    }
-
-    .grid{
-      height:auto;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-      gap: 14px;
-    }
-
-    .card{
-      height: min(78vh, 680px);
-    }
-
-    .name{
-      font-size: 18px;
-      padding: 10px 12px;
-    }
-
-    .back{
-      padding: 14px;
-      gap: 10px;
-    }
-
-    .back h2{
-      font-size: 18px;
-    }
-
-    .back p{
-      font-size: 18px;
-      line-height: 1.5;
-      -webkit-overflow-scrolling: touch;
-    }
-  }
+}
 </style>
 </head>
 
 <body>
-<header>
-  <h1>Flashcard autori della fiaba</h1>
-  <p>Clicca sulla card per capovolgerla</p>
-</header>
 
 <main>
-  <section class="grid" id="grid" aria-label="Flashcard autori"></section>
+
+<header>
+  <h1>Flashcard autori della fiaba</h1>
+  <h2>clicca sulla card per capovolgerla</h2>
+</header>
+
+<section class="grid" id="grid"></section>
+
 </main>
 
 <script>
-  // Ordine cronologico + testi aggiornati con titoli fiabe in grassetto
-  const cards = [
-    {
-      name: "LE MILLE E UNA NOTTE",
-      img: "mille.png",
-      title: "Le Mille e una notte",
-      text: `Sono Shahrazād. Vivo tra l’800 e il 1300 nelle terre dell’Oriente e sono la narratrice de <strong>Le mille e una notte</strong>. Ogni sera racconto una storia al sultano e mi fermo sul momento più emozionante per salvare la mia vita.
-      Tra le storie più famose: <strong>Aladino e la lampada meravigliosa</strong>, <strong>Ali Babà e i quaranta ladroni</strong>, <strong>Sinbad il marinaio</strong>.
-      Le mie fiabe sono ambientate in luoghi lontani e pieni di magia. I protagonisti vincono grazie all’intelligenza e al coraggio.`
-    },
-    {
-      name: "PERRAULT",
-      img: "perrault.png",
-      title: "Charles Perrault",
-      text: `Sono Charles Perrault, scrittore francese del 1600. Ho raccolto e scritto fiabe della tradizione popolare per conservarle nel tempo.
-      Tra le mie opere più famose: <strong>Cenerentola</strong>, <strong>Cappuccetto Rosso</strong>, <strong>La Bella Addormentata</strong>, <strong>Il Gatto con gli stivali</strong>.
-      Nelle mie storie unisco magia e insegnamenti. Alla fine inserisco spesso una morale.`
-    },
-    {
-      name: "FRATELLI GRIMM",
-      img: "grimm.png",
-      title: "Fratelli Grimm",
-      text: `Siamo Jacob e Wilhelm Grimm, studiosi tedeschi del 1800. Abbiamo raccolto fiabe tramandate a voce dal popolo.
-      Tra le più celebri: <strong>Biancaneve</strong>, <strong>Hansel e Gretel</strong>, <strong>Raperonzolo</strong>, <strong>Cenerentola</strong>.
-      Le nostre fiabe parlano di magia ma anche di prove difficili. I protagonisti devono affrontare paure e pericoli per crescere.`
-    },
-    {
-      name: "ANDERSEN",
-      img: "andersen.png",
-      title: "Hans Christian Andersen",
-      text: `Sono Hans Christian Andersen, scrittore danese del 1800. Non mi sono limitato a raccogliere fiabe popolari: ne ho scritte di nuove.
-      Tra le mie opere più conosciute: <strong>La Sirenetta</strong>, <strong>Il brutto anatroccolo</strong>, <strong>La piccola fiammiferaia</strong>, <strong>I vestiti nuovi dell’imperatore</strong>.
-      Le mie fiabe parlano di emozioni profonde e del desiderio di essere accettati.`
-    },
-    {
-      name: "AFANASIEV",
-      img: "afanasiev.png",
-      title: "Aleksandr Afanasiev",
-      text: `Sono Aleksandr Afanasiev, studioso russo del 1800, e ho raccolto molte fiabe della tradizione popolare russa.
-      Tra le più famose: <strong>L’uccello di fuoco</strong>, <strong>Vassilissa la bella</strong> e le storie di <strong>Baba Jaga</strong>.
-      Nelle fiabe che ho raccolto compaiono creature magiche, foreste misteriose e prove difficili.`
-    },
-    {
-      name: "MUNARI",
-      img: "munari.png",
-      title: "Bruno Munari",
-      text: `Sono Bruno Munari, artista e autore italiano del 1900. Ho creato libri originali per bambini, unendo immagini, colori e materiali diversi.
-      Tra le mie opere più conosciute: <strong>Cappuccetto Verde</strong>, <strong>Cappuccetto Giallo</strong>, <strong>Nella notte buia</strong>.
-      Le mie fiabe invitano a osservare e immaginare in modo creativo.`
-    },
-    {
-      name: "RODARI",
-      img: "rodari.png",
-      title: "Gianni Rodari",
-      text: `Sono Gianni Rodari, scrittore italiano del 1900. Ho scritto storie per ragazzi usando fantasia e creatività.
-      Tra le mie opere più note: <strong>Favole al telefono</strong>, <strong>Il libro degli errori</strong>, <strong>La grammatica della fantasia</strong>.
-      Nelle mie storie gioco con le parole e con le idee per stimolare l’immaginazione.`
-    },
-    {
-      name: "CALVINO",
-      img: "calvino.png",
-      title: "Italo Calvino",
-      text: `Sono Italo Calvino, scrittore italiano del 1900. Ho raccolto e riscritto le <strong>Fiabe italiane</strong>, valorizzando le storie popolari delle diverse regioni d’Italia.
-      Nel mio lavoro mantengo la struttura della fiaba tradizionale ma uso un linguaggio chiaro e moderno.`
-    }
-  ];
+const cards = [
+{
+name:"SHAHRAZĀD",
+img:"mille.png",
+text:`<strong>Io sono Shahrazād</strong>, vivo tra l’800 e il 1300 nelle terre dell’Oriente e sono la narratrice de <strong>Le mille e una notte</strong>. 
+Ogni sera racconto una storia al sultano e mi fermo sul momento più emozionante per salvare la mia vita. 
+Tra le più famose: <strong>Aladino e la lampada meravigliosa</strong>, <strong>Ali Babà e i quaranta ladroni</strong>, <strong>Sinbad il marinaio</strong>. 
+Le mie fiabe sono ambientate in luoghi lontani e pieni di magia. I protagonisti vincono grazie all’intelligenza e al coraggio.`
+},
+{
+name:"CHARLES PERRAULT",
+img:"perrault.png",
+text:`Io sono <strong>Charles Perrault</strong>, scrittore francese del 1600. Ho raccolto e scritto fiabe della tradizione popolare. 
+Tra le mie opere più famose: <strong>Cenerentola</strong>, <strong>Cappuccetto Rosso</strong>, <strong>La Bella Addormentata</strong>, <strong>Il Gatto con gli stivali</strong>. 
+Nelle mie storie unisco magia e insegnamenti e inserisco spesso una morale.`
+},
+{
+name:"JACOB E WILHELM GRIMM",
+img:"grimm.png",
+text:`Siamo <strong>Jacob e Wilhelm Grimm</strong>, studiosi tedeschi del 1800. Abbiamo raccolto fiabe tramandate a voce dal popolo. 
+Tra le più celebri: <strong>Biancaneve</strong>, <strong>Hansel e Gretel</strong>, <strong>Raperonzolo</strong>, <strong>Cenerentola</strong>. 
+Le nostre fiabe raccontano magia e prove difficili: i protagonisti affrontano paure e pericoli per crescere.`
+},
+{
+name:"HANS CHRISTIAN ANDERSEN",
+img:"andersen.png",
+text:`Io sono <strong>Hans Christian Andersen</strong>, scrittore danese del 1800. Non mi sono limitato a raccogliere fiabe popolari: ne ho scritte di nuove. 
+Tra le più conosciute: <strong>La Sirenetta</strong>, <strong>Il brutto anatroccolo</strong>, <strong>La piccola fiammiferaia</strong>, <strong>I vestiti nuovi dell’imperatore</strong>. 
+Le mie fiabe parlano di emozioni profonde e del desiderio di essere accettati.`
+},
+{
+name:"ALEKSANDR AFANASIEV",
+img:"afanasiev.png",
+text:`Io sono <strong>Aleksandr Afanasiev</strong>, studioso russo del 1800. Ho raccolto molte fiabe della tradizione popolare russa. 
+Tra le più famose: <strong>L’uccello di fuoco</strong>, <strong>Vassilissa la bella</strong> e le storie di <strong>Baba Jaga</strong>. 
+Nelle fiabe compaiono creature magiche, foreste misteriose e prove difficili.`
+},
+{
+name:"BRUNO MUNARI",
+img:"munari.png",
+text:`Io sono <strong>Bruno Munari</strong>, artista e autore italiano del 1900. Ho creato libri originali per bambini unendo immagini, colori e materiali diversi. 
+Tra le opere più conosciute: <strong>Cappuccetto Verde</strong>, <strong>Cappuccetto Giallo</strong>, <strong>Nella notte buia</strong>. 
+Le mie fiabe invitano a osservare e immaginare in modo creativo.`
+},
+{
+name:"GIANNI RODARI",
+img:"rodari.png",
+text:`Io sono <strong>Gianni Rodari</strong>, scrittore italiano del 1900. Ho scritto storie per ragazzi usando fantasia e creatività. 
+Tra le opere più note: <strong>Favole al telefono</strong>, <strong>Il libro degli errori</strong>, <strong>La grammatica della fantasia</strong>. 
+Nelle mie storie gioco con le parole per stimolare l’immaginazione.`
+},
+{
+name:"ITALO CALVINO",
+img:"calvino.png",
+text:`<strong>Io sono Italo Calvino</strong>, scrittore italiano del 1900. Ho raccolto e riscritto le <strong>Fiabe italiane</strong>, valorizzando le storie popolari delle regioni d’Italia. 
+Mantengo la struttura della fiaba tradizionale usando un linguaggio chiaro e moderno.`
+}
+];
 
-  const grid = document.getElementById("grid");
+const grid=document.getElementById("grid");
 
-  function escapeAttr(str){
-    return String(str)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  // Permette <strong> nel testo ma evita altri tag
-  function sanitizeAllowStrong(html){
-    const tmp = document.createElement("div");
-    tmp.innerHTML = String(html);
-
-    const allowed = new Set(["STRONG"]);
-    const walk = (node) => {
-      [...node.children].forEach(ch => {
-        if(!allowed.has(ch.tagName)){
-          const text = document.createTextNode(ch.textContent);
-          ch.replaceWith(text);
-        }else{
-          walk(ch);
-        }
-      });
-    };
-    walk(tmp);
-    return tmp.innerHTML;
-  }
-
-  cards.forEach(c => {
-    const el = document.createElement("article");
-    el.className = "card";
-
-    el.innerHTML = `
-      <button type="button" aria-label="Capovolgi card: ${escapeAttr(c.name)}">
-        <div class="card-inner">
-          <div class="side front">
-            <div class="img-wrap">
-              <img src="${escapeAttr(c.img)}" alt="Immagine: ${escapeAttr(c.name)}">
-              <div class="name">${escapeAttr(c.name)}</div>
-            </div>
-          </div>
-          <div class="side back">
-            <h2>${escapeAttr(c.title)}</h2>
-            <p>${sanitizeAllowStrong(c.text)}</p>
-          </div>
+cards.forEach(c=>{
+  const el=document.createElement("article");
+  el.className="card";
+  el.innerHTML=`
+    <button type="button" aria-label="Capovolgi card">
+      <div class="card-inner">
+        <div class="side front">
+          <h3>${c.name}</h3>
+          <img src="${c.img}" alt="">
         </div>
-      </button>
-    `;
-
-    const img = el.querySelector("img");
-    img.addEventListener("error", () => {
-      const wrap = el.querySelector(".img-wrap");
-      wrap.innerHTML =
-        `<div class="missing">Immagine non trovata.<br>Controlla il nome del file.</div>
-         <div class="name">${escapeAttr(c.name)}</div>`;
-    });
-
-    el.querySelector("button").addEventListener("click", () => el.classList.toggle("flipped"));
-
-    grid.appendChild(el);
-  });
+        <div class="side back">
+          <p>${c.text}</p>
+        </div>
+      </div>
+    </button>
+  `;
+  el.querySelector("button").addEventListener("click",()=>el.classList.toggle("flipped"));
+  grid.appendChild(el);
+});
 </script>
+
 </body>
 </html>
